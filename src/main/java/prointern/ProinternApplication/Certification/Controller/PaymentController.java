@@ -1,11 +1,17 @@
 package prointern.ProinternApplication.Certification.Controller;
 
-import com.kiran.certification.certification.model.Payment;
-import com.kiran.certification.certification.service.PaymentService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import prointern.ProinternApplication.Certification.Model.Payment;
+import prointern.ProinternApplication.Certification.Service.PaymentService;
 
 @RestController
 @RequestMapping("/api/payments")

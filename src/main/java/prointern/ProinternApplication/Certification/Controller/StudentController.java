@@ -1,6 +1,7 @@
 package prointern.ProinternApplication.Certification.Controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -12,10 +13,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.kiran.certification.certification.model.Student;
-import com.kiran.certification.certification.service.StudentService;
-import com.kiran.certification.certification.serviceimpl.StudentServiceimpl;
+
 import jakarta.validation.Valid;
+import prointern.ProinternApplication.Certification.Model.Student;
+import prointern.ProinternApplication.Certification.Service.StudentService;
+import prointern.ProinternApplication.Certification.ServiceImpl.StudentServiceimpl;
 
 @RestController
 @RequestMapping("/student")

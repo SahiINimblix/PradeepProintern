@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kiran.certification.certification.model.Trainer;
-import com.kiran.certification.certification.service.TrainerService;
-
 import jakarta.validation.Valid;
+import prointern.ProinternApplication.Certification.Model.Trainer;
+import prointern.ProinternApplication.Certification.Service.TrainerService;
 
 @RestController
 @RequestMapping("/api/trainer")
