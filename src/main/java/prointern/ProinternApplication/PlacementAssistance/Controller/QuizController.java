@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import prointern.ProinternApplication.Model.User;
 import prointern.ProinternApplication.PlacementAssistance.Service.AuthService;
 import prointern.ProinternApplication.PlacementAssistance.Service.QuizService;
 import prointern.ProinternApplication.PlacementAssistance.dto.AnswerDTO;
@@ -24,7 +25,6 @@ import prointern.ProinternApplication.PlacementAssistance.dto.StartQuizResponse;
 import prointern.ProinternApplication.PlacementAssistance.dto.SubmitQuizRequest;
 import prointern.ProinternApplication.PlacementAssistance.dto.SubmitQuizResponse;
 import prointern.ProinternApplication.PlacementAssistance.entities.Attempt;
-import prointern.ProinternApplication.PlacementAssistance.entities.User;
 import prointern.ProinternApplication.PlacementAssistance.repo.AttemptRepository;
 
 @CrossOrigin(origins = "*")

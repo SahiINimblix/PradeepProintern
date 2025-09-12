@@ -27,6 +27,7 @@ public class User {
 	private Long id;
 	
 	@NotBlank(message = "Username is required")
+	@Column(unique = true, nullable=false)
 	@Size(min = 2, max = 50, message = " Username must be between 20 and 50 characters")
     private String username;
 	
@@ -40,8 +41,19 @@ public class User {
 			regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!#%?&])[A-Za-z\\d@$!%*?&]{8,}$", // check this 
 			message= " Password must be at least 8 characters and include uppercase, lowercase, number")
 	private String password;
-
 	
+
+    @Column(nullable=false)
+    private String passwordHash;
+
+    // simple token for demo; real app should use JWT with expiry
+    @Column(unique = true)
+    private String token;
+
+    public User(String username, String passwordHash) {
+      this.username = username;
+      this.passwordHash = passwordHash;
+  }
 	
     
 }

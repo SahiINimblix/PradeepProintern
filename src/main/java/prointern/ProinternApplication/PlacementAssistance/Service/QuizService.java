@@ -10,11 +10,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import prointern.ProinternApplication.Model.User;
 import prointern.ProinternApplication.PlacementAssistance.dto.QuestionDTO;
 import prointern.ProinternApplication.PlacementAssistance.entities.Attempt;
 import prointern.ProinternApplication.PlacementAssistance.entities.AttemptStatus;
 import prointern.ProinternApplication.PlacementAssistance.entities.Question;
-import prointern.ProinternApplication.PlacementAssistance.entities.User;
 import prointern.ProinternApplication.PlacementAssistance.repo.AttemptRepository;
 import prointern.ProinternApplication.PlacementAssistance.repo.QuestionRepository;
 

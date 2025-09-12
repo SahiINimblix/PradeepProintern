@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import prointern.ProinternApplication.Model.User;
 import prointern.ProinternApplication.PlacementAssistance.Service.AuthService;
 import prointern.ProinternApplication.PlacementAssistance.dto.LoginRequest;
 import prointern.ProinternApplication.PlacementAssistance.dto.LoginResponse;
 import prointern.ProinternApplication.PlacementAssistance.dto.RegisterRequest;
-import prointern.ProinternApplication.PlacementAssistance.entities.User;
-import prointern.ProinternApplication.PlacementAssistance.repo.UserRepository;
+import prointern.ProinternApplication.Repository.UserRepository;
 
 @CrossOrigin(origins = "*")
 @RestController

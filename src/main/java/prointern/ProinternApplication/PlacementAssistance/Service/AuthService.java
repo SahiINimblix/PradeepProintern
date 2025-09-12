@@ -6,8 +6,8 @@ import java.util.UUID;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
-import prointern.ProinternApplication.PlacementAssistance.entities.User;
-import prointern.ProinternApplication.PlacementAssistance.repo.UserRepository;
+import prointern.ProinternApplication.Model.User;
+import prointern.ProinternApplication.Repository.UserRepository;
 
 @Service
 public class AuthService {
