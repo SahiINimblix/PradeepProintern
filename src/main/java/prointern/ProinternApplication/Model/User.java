@@ -38,7 +38,7 @@ public class User {
     
 	@NotBlank(message = "Password is required")
 	@Pattern(
-			regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!#%?&])[A-Za-z\\d@$!%*?&]{8,}$", // check this 
+			regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!#%?&])[A-Za-z\\d@$!%*?&]{4,}$", // check this 
 			message= " Password must be at least 8 characters and include uppercase, lowercase, number")
 	private String password;
 	
