@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name= " users")
+@Table(name= "users")
 public class User {
 	
 	
@@ -54,6 +54,53 @@ public class User {
       this.username = username;
       this.passwordHash = passwordHash;
   }
+
+//	public String getUsername() {
+//		return this.username;
+//	}
+//
+//	public Object getId() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	public void setUsername(String username) {
+//		this.username = username;
+//		
+//	}
+//
+//	public void setEmail(String email) {
+//		this.email = email;
+//		
+//	}
+//
+//	public void setPasswordHash(String hashpw) {
+//		this.passwordHash = hashpw;
+//		
+//	}
+//
+//	public String getPasswordHash() {
+//		
+//		return this.passwordHash;
+//	}
+//
+//	public String getEmail() {
+//		return this.email;
+//	}
+//
+//	public void setPassword(String password2) {
+//		this.password = password2;
+//		
+//	}
+//
+//	public Object getPassword() {
+//		return this.password;
+//	}
+//
+//	public void setToken(String token2) {
+//		// TODO Auto-generated method stub
+//		
+//	}
 	
     
 }
