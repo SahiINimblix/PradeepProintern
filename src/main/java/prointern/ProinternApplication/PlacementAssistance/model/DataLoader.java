@@ -29,7 +29,9 @@ public class DataLoader implements CommandLineRunner {
         if (!userRepository.existsByUsername("test")) {
             User u = new User();
             u.setUsername("test");
-            u.setPasswordHash(BCrypt.hashpw("test123", BCrypt.gensalt()));
+            u.setPassword("Testing@1234");
+            u.setEmail("test@gmail.com");
+            u.setPasswordHash(BCrypt.hashpw("Testing@1234", BCrypt.gensalt()));
             userRepository.save(u);
             System.out.println("Demo user created: test / test123");
         }
