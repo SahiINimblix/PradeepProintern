@@ -23,6 +23,4 @@ public class QuestionController {
 		return questionService.getRandomQuestions(topic);
 	}
 	
-	
-
 }
