@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import prointern.ProinternApplication.PlacementAssistance.repo.QuestionRepository;
 import prointern.ProinternApplication.QuestionApi.Model.Question;
-import prointern.ProinternApplication.QuestionApi.Repository.QuestionRepository;
 
 @Service
 public class QuestionService {

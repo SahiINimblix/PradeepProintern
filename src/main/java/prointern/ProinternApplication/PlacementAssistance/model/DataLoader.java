@@ -8,8 +8,8 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 
 import prointern.ProinternApplication.Model.User;
-import prointern.ProinternApplication.PlacementAssistance.entities.Question;
 import prointern.ProinternApplication.PlacementAssistance.repo.QuestionRepository;
+import prointern.ProinternApplication.QuestionApi.Model.Question;
 import prointern.ProinternApplication.Repository.UserRepository;
 
 @Component

@@ -28,7 +28,7 @@ public class User {
 	
 	@NotBlank(message = "Username is required")
 	@Column(unique = true, nullable=false)
-	@Size(min = 2, max = 50, message = " Username must be between 20 and 50 characters")
+	@Size(min = 2, max = 50, message = " Username must be between 2 and 50 characters")
     private String username;
 	
 	@NotBlank(message=" Email is required")
