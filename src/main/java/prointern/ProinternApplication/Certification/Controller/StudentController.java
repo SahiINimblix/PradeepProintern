@@ -40,7 +40,7 @@ public class StudentController {
 
 	@GetMapping("/{id}")
 	@Validated
-	public ResponseEntity<Student> getStudentById(@PathVariable Long id) {
+	public ResponseEntity<Student> getStudentById(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(studentService.getStudentById(id));
 	}
 
@@ -58,7 +58,7 @@ public class StudentController {
 
 	@DeleteMapping("/{id}")
 	@Validated
-	public String deleteStudent(@PathVariable Long id) {
+	public String deleteStudent(@PathVariable("id") Long id) {
 		return studentService.deleteStudent(id);
 //		return ResponseEntity.noContent().build();
 	}

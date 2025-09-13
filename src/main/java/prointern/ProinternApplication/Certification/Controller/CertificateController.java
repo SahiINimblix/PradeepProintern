@@ -29,11 +29,11 @@ public class CertificateController {
 
     // Generate certificate for a student after payment & test
     @PostMapping("/generate/{trainingId}/student/{studentId}")
-    public ResponseEntity<Certificate> generateCertificate(@PathVariable Long trainingId,
-                                                           @PathVariable Long studentId,
-                                                           @RequestParam double score,
-                                                           @RequestParam String status,
-                                                           @RequestParam Long paymentId) {
+    public ResponseEntity<Certificate> generateCertificate(@PathVariable("trainingId") Long trainingId,
+                                                           @PathVariable("studentId") Long studentId,
+                                                           @RequestParam("score") double score,
+                                                           @RequestParam("status") String status,
+                                                           @RequestParam("paymentId") Long paymentId) {
         // Call with correct parameter order
         Certificate certificate = certificateService.generateCertificate(
                 trainingId, studentId, score, status, paymentId
@@ -44,14 +44,14 @@ public class CertificateController {
 
     // Get single certificate
     @GetMapping("/{id}")
-    public ResponseEntity<Certificate> getCertificate(@PathVariable Long id) {
+    public ResponseEntity<Certificate> getCertificate(@PathVariable("id") Long id) {
         Certificate certificate = certificateService.getCertificateById(id);
         return ResponseEntity.ok(certificate);
     }
 
     // Download certificate as PDF (direct file download)
     @GetMapping("/{id}/download")
-    public ResponseEntity<byte[]> downloadCertificate(@PathVariable Long id) {
+    public ResponseEntity<byte[]> downloadCertificate(@PathVariable("id") Long id) {
         byte[] pdfBytes = certificateService.downloadCertificate(id);
 
         HttpHeaders headers = new HttpHeaders();
@@ -63,7 +63,7 @@ public class CertificateController {
 
     // Get Base64 version of certificate 
     @GetMapping("/{id}/download/base64")
-    public ResponseEntity<String> downloadCertificateBase64(@PathVariable Long id) {
+    public ResponseEntity<String> downloadCertificateBase64(@PathVariable("id") Long id) {
         byte[] pdfBytes = certificateService.downloadCertificate(id);
         String base64 = Base64.getEncoder().encodeToString(pdfBytes);
         return ResponseEntity.ok(base64);

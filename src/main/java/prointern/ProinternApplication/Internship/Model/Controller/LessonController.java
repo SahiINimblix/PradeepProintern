@@ -1,5 +1,6 @@
 package prointern.ProinternApplication.Internship.Model.Controller;
 
+import prointern.ProinternApplication.Exception.DetailsNotFoundException;
 import prointern.ProinternApplication.Internship.Model.Course;
 import prointern.ProinternApplication.Internship.Model.Lesson;
 import prointern.ProinternApplication.Internship.Model.Service.CourseService;
@@ -25,12 +26,12 @@ public class LessonController {
     }
     
     @GetMapping("/course/{courseId}")
-    public List<Lesson> getLessonsByCourseId(@PathVariable Long courseId) {
+    public List<Lesson> getLessonsByCourseId(@PathVariable("courseId") Long courseId) {
         return lessonService.getLessonsByCourseId(courseId);
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<Lesson> getLessonById(@PathVariable Long id) {
+    public ResponseEntity<Lesson> getLessonById(@PathVariable("id") Long id) {
         Optional<Lesson> lesson = lessonService.getLessonById(id);
         return lesson.map(ResponseEntity::ok)
                    .orElse(ResponseEntity.notFound().build());
@@ -40,13 +41,13 @@ public class LessonController {
     public ResponseEntity<Lesson> createLesson(@RequestBody Lesson lesson) {
         // Check if course ID is provided
         if (lesson.getCourse() == null || lesson.getCourse().getId() == null) {
-            return ResponseEntity.badRequest().build();
+            throw new DetailsNotFoundException("Unable to create");
         }
         
         // Get the course from the database
         Optional<Course> course = courseService.getCourseById(lesson.getCourse().getId());
         if (!course.isPresent()) {
-            return ResponseEntity.notFound().build();
+        	throw new DetailsNotFoundException("Course with id "+lesson.getCourse().getId()+" is not found.");
         }
         
         // Set the course on the lesson
@@ -58,7 +59,7 @@ public class LessonController {
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<Lesson> updateLesson(@PathVariable Long id, @RequestBody Lesson lessonDetails) {
+    public ResponseEntity<Lesson> updateLesson(@PathVariable("id") Long id, @RequestBody Lesson lessonDetails) {
         Optional<Lesson> lesson = lessonService.getLessonById(id);
         if (lesson.isPresent()) {
             Lesson updatedLesson = lesson.get();
@@ -80,7 +81,7 @@ public class LessonController {
     }
     
     @DeleteMapping("/{id}")
-    public String deleteLesson(@PathVariable Long id) {
+    public String deleteLesson(@PathVariable("id") Long id) {
 //        if (lessonService.getLessonById(id).isPresent()) {
 //            lessonService.deleteLesson(id);
 //            return ResponseEntity.ok().build();

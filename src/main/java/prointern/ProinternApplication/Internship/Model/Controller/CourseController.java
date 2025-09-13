@@ -1,6 +1,7 @@
 package prointern.ProinternApplication.Internship.Model.Controller;
 
 import prointern.ProinternApplication.Internship.Model.Service.CourseService;
+import prointern.ProinternApplication.Exception.DetailsNotFoundException;
 import prointern.ProinternApplication.Internship.Model.Course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,7 @@ public class CourseController {
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<Course> updateCourse(@PathVariable Long id, @RequestBody Course courseDetails) {
+    public ResponseEntity<Course> updateCourse(@PathVariable("id") Long id, @RequestBody Course courseDetails) {
         Optional<Course> course = courseService.getCourseById(id);
         if (course.isPresent()) {
             Course updatedCourse = course.get();
@@ -47,12 +48,12 @@ public class CourseController {
             updatedCourse.setCompletedLessons(courseDetails.getCompletedLessons());
             return ResponseEntity.ok(courseService.saveCourse(updatedCourse));
         } else {
-            return ResponseEntity.notFound().build();
+            throw new DetailsNotFoundException("Unable to update");
         }
     }
     
     @DeleteMapping("/{id}")
-    public String deleteCourse(@PathVariable Long id) {
+    public String deleteCourse(@PathVariable("id") Long id) {
 //        if (courseService.getCourseById(id).isPresent()) {
 //            courseService.deleteCourse(id);
 //            return ResponseEntity.ok().build();

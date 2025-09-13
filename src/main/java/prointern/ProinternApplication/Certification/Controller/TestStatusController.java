@@ -25,24 +25,24 @@ public class TestStatusController {
 
     // Record test result for a student in a training
     @PostMapping("/training/{trainingId}/student/{studentId}")
-    public ResponseEntity<Certificate> recordTestResult(@PathVariable Long trainingId,
-                                                        @PathVariable Long studentId,
-                                                        @RequestParam double score,
-                                                        @RequestParam String status,
-                                                        @RequestParam Long paymentId) {
+    public ResponseEntity<Certificate> recordTestResult(@PathVariable("trainingId") Long trainingId,
+                                                        @PathVariable("studentId") Long studentId,
+                                                        @RequestParam("score") double score,
+                                                        @RequestParam("status") String status,
+                                                        @RequestParam("paymentId") Long paymentId) {
         Certificate certificate = testStatusService.recordTestResult(trainingId, studentId, score, status, paymentId);
         return ResponseEntity.ok(certificate);
     }
 
     //  Get test results (certificates) of a student
     @GetMapping("/student/{studentId}")
-    public ResponseEntity<List<Certificate>> getTestResultsByStudent(@PathVariable Long studentId) {
+    public ResponseEntity<List<Certificate>> getTestResultsByStudent(@PathVariable("studentId") Long studentId) {
         return ResponseEntity.ok(testStatusService.getTestResultsByStudent(studentId));
     }
 
     // Get all test results for a training
     @GetMapping("/training/{trainingId}")
-    public ResponseEntity<List<Certificate>> getTestResultsByTraining(@PathVariable Long trainingId) {
+    public ResponseEntity<List<Certificate>> getTestResultsByTraining(@PathVariable("trainingId") Long trainingId) {
         return ResponseEntity.ok(testStatusService.getTestResultsByTraining(trainingId));
     }
 }

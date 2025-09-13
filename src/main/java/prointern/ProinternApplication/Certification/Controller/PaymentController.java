@@ -25,9 +25,9 @@ public class PaymentController {
 
     // Make a new payment for a student in a training
     @PostMapping("/student/{studentId}/training/{trainingId}")
-    public ResponseEntity<Payment> makePayment(@PathVariable Long studentId,
-                                               @PathVariable Long trainingId,
-                                               @RequestParam double amount) {
+    public ResponseEntity<Payment> makePayment(@PathVariable("studentId") Long studentId,
+                                               @PathVariable("trainingId") Long trainingId,
+                                               @RequestParam("amount") double amount) {
         Payment payment = paymentService.makePayment(studentId, trainingId, amount);
         return ResponseEntity.ok(payment);
     }
@@ -40,19 +40,19 @@ public class PaymentController {
 
     //  Get payments made by a student
     @GetMapping("/student/{studentId}")
-    public ResponseEntity<List<Payment>> getPaymentsByStudent(@PathVariable Long studentId) {
+    public ResponseEntity<List<Payment>> getPaymentsByStudent(@PathVariable("studentId") Long studentId) {
         return ResponseEntity.ok(paymentService.getPaymentsByStudent(studentId));
     }
 
     // Get payments for a specific training
     @GetMapping("/training/{trainingId}")
-    public ResponseEntity<List<Payment>> getPaymentsByTraining(@PathVariable Long trainingId) {
+    public ResponseEntity<List<Payment>> getPaymentsByTraining(@PathVariable("trainingId") Long trainingId) {
         return ResponseEntity.ok(paymentService.getPaymentsByTraining(trainingId));
     }
 
     //  Get a single payment by ID
     @GetMapping("/{paymentId}")
-    public ResponseEntity<Payment> getPaymentById(@PathVariable Long paymentId) {
+    public ResponseEntity<Payment> getPaymentById(@PathVariable("paymentId") Long paymentId) {
         return ResponseEntity.ok(paymentService.getPaymentById(paymentId));
     }
 }

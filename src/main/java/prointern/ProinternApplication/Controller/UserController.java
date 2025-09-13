@@ -84,7 +84,7 @@ public class UserController {
 	}
 
 	@GetMapping("/getByEmail")
-	public User getUserByEmail(@RequestParam String email) {
+	public User getUserByEmail(@RequestParam("email") String email) {
 		return userService.getUserByEmail(email);
 	}
 

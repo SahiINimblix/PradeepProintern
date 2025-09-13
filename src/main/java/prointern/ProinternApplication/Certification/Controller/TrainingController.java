@@ -29,13 +29,13 @@ public class TrainingController {
 
 	@PostMapping("/assign/{studentId}/{trainerId}")
 	@Validated
-	public ResponseEntity<Training> assignTraining(@PathVariable Long studentId,@PathVariable Long trainerId , @RequestBody Training training) {
+	public ResponseEntity<Training> assignTraining(@PathVariable("studentId") Long studentId,@PathVariable("trainerId") Long trainerId , @RequestBody Training training) {
 		return ResponseEntity.ok(trainingService.assignTraining(studentId, trainerId, training));
 	}
 
 	@GetMapping("/{id}")
 	@Validated
-	public ResponseEntity<Training> getTrainingById(@PathVariable Long id) {
+	public ResponseEntity<Training> getTrainingById(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(trainingService.getTrainingById(id));
 	}
 
@@ -46,13 +46,13 @@ public class TrainingController {
 
 	@PutMapping("/{id}/completion")
 	@Validated
-	public ResponseEntity<Training> updateCompletionStatus(@PathVariable Long id,@RequestParam boolean status) {
+	public ResponseEntity<Training> updateCompletionStatus(@PathVariable("id") Long id,@RequestParam("status") boolean status) {
 		return ResponseEntity.ok(trainingService.updateCompletionStatus(id, status));
 	}
 
 	@DeleteMapping("/{id}")
 	@Validated
-	public String deleteTraining(@PathVariable Long id) {
+	public String deleteTraining(@PathVariable("id") Long id) {
 		return trainingService.deleteTraining(id);
 //		return ResponseEntity.noContent().build();
 	}
