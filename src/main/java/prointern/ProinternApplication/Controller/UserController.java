@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import prointern.ProinternApplication.Exception.DetailsNotFoundException;
 import prointern.ProinternApplication.Model.User;
 import prointern.ProinternApplication.Service.EmailService;
 import prointern.ProinternApplication.Service.UserService;
@@ -36,19 +37,22 @@ public class UserController {
 		try {
 			User newUser = userService.registerUser(user);
 			storedOtp = emailService.sendVerificationEmail(newUser.getEmail());
+			userService.saveOTP(storedOtp,newUser.getEmail());
 			System.out.println("Generated OTP: " + storedOtp);
-			return ResponseEntity.ok("OTP sent to " + newUser.getEmail());
+			String[] parts = newUser.getEmail().split("@");
+			String encryptMail = parts[0].substring(0, 3) + "XXX" +parts[0].substring(-2)+ "@" + parts[1];
+			return ResponseEntity.ok("OTP sent to " + encryptMail);
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
 
 	@PostMapping("/verify")
-	public String verify(@RequestParam int otp) {
+	public String verify(@RequestParam("otp") int otp) {
 		if (otp == storedOtp) {
 			return "Verification successful!";
 		} else {
-			return "Invalid OTP!";
+			throw new DetailsNotFoundException("Invalid OTP!");
 		}
 	}
 

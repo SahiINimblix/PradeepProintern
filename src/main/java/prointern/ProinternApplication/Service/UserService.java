@@ -8,4 +8,5 @@ public interface UserService {
 	public User forgotPasswordThroughEmail(String email);
 	public String resetPasswordByEmail(String email,String password);
 	public String loginUser(String email,String password);
+	public void saveOTP(int otp,String email);
 }

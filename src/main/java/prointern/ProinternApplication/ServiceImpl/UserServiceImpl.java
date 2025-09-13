@@ -3,6 +3,7 @@ package prointern.ProinternApplication.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import prointern.ProinternApplication.Exception.DetailsNotFoundException;
 import prointern.ProinternApplication.Exception.UserNotFoundException;
 import prointern.ProinternApplication.Model.User;
 import prointern.ProinternApplication.Repository.UserRepository;
@@ -17,7 +18,7 @@ public class UserServiceImpl implements UserService {
 		// check if email already exists
 		User existingUser = userRepository.findByEmail(user.getEmail());
 		if (existingUser != null) {
-			throw new Exception("Email is already reigistered");
+			throw new DetailsNotFoundException("Email is already reigistered");
 		}
 		return userRepository.save(user);
 	}
@@ -65,5 +66,10 @@ public class UserServiceImpl implements UserService {
 			return "Login Successfully";
 		} else
 			throw new UserNotFoundException("Invalid Password");
+	}
+
+	@Override
+	public void saveOTP(int otp,String email) {
+		userRepository.saveOTP(otp, email);		
 	}
 }

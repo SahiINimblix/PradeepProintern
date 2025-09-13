@@ -16,5 +16,8 @@ public interface UserRepository extends JpaRepository<User, Long>{
     
     @Query(value="select * from users where email=?1",nativeQuery=true)
 	User findByEmail(String email);
+    
+    @Query(value = "update users set otp=?1 where email=?2",nativeQuery = true)
+    void saveOTP(int otp, String email);
 
 }

@@ -52,6 +52,8 @@ public class User {
     
     @Column(columnDefinition = "VARCHAR(10) DEFAULT 'UNVERIFIED'")
     private String status;
+    
+    private int otp;
 
     public User(String username, String passwordHash) {
       this.username = username;
