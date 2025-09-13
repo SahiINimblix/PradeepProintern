@@ -49,6 +49,9 @@ public class User {
     // simple token for demo; real app should use JWT with expiry
     @Column(unique = true)
     private String token;
+    
+    @Column(columnDefinition = "VARCHAR(10) DEFAULT 'UNVERIFIED'")
+    private String status;
 
     public User(String username, String passwordHash) {
       this.username = username;

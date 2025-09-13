@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String resetPasswordByEmail(String email,String password) {
+	public String resetPasswordByEmail(String email, String password) {
 		User user = userRepository.findByEmail(email);
 		// verification code
 		if (!user.equals(null)) {
@@ -58,9 +58,12 @@ public class UserServiceImpl implements UserService {
 		User user = userRepository.findByEmail(email);
 		if (user == null)
 			throw new UserNotFoundException("Invalid Email address");
-		else if (user.getPassword().equals(password))
+		else if (user.getStatus().equalsIgnoreCase("unverified"))
+			throw new UserNotFoundException("Unable to Login, user is not verified");
+		else if (user.getPassword().equals(password)) {
+			user.setStatus("VERIFIED");
 			return "Login Successfully";
-		else
+		} else
 			throw new UserNotFoundException("Invalid Password");
 	}
 }
