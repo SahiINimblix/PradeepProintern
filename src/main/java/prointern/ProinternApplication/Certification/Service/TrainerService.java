@@ -10,5 +10,5 @@ public interface TrainerService {
 	    Trainer getTrainerById(Long id);
 	    List<Trainer> getAllTrainers();
 	    Trainer updateTrainer(Long id, Trainer trainer);
-	    void deleteTrainer(Long id);
+	    String deleteTrainer(Long id);
 }

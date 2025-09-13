@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import prointern.ProinternApplication.Exception.DetailsNotFoundException;
 import prointern.ProinternApplication.Internship.Model.Task;
 import prointern.ProinternApplication.Internship.Model.Repository.TaskRepository;
 
@@ -16,18 +17,27 @@ public class TaskService {
     private TaskRepository taskRepository;
     
     public List<Task> getAllTasks() {
-        return taskRepository.findAll();
+    	List<Task> listOfTask = taskRepository.findAll();
+    	if(listOfTask == null) throw new DetailsNotFoundException("No tasks found in database.");
+    	return listOfTask;
     }
     
     public Optional<Task> getTaskById(Long id) {
-        return taskRepository.findById(id);
+    	Optional<Task> task = taskRepository.findById(id);
+    	if(task == null) throw new DetailsNotFoundException("Task with id "+id+" is not found.");
+    	return task;
     }
     
     public Task saveTask(Task task) {
-        return taskRepository.save(task);
+    	Task task1 = taskRepository.save(task);
+    	if(task1 == null) throw new DetailsNotFoundException("Unable to save.");
+    	return task1;
     }
     
-    public void deleteTask(Long id) {
+    public String deleteTask(Long id) {
+    	Optional<Task> task = taskRepository.findById(id);
+    	if(task == null) throw new DetailsNotFoundException("Unable to delete.");
         taskRepository.deleteById(id);
+        return "Task deleted successfully";
     }
 }

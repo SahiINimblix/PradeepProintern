@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import prointern.ProinternApplication.Exception.DetailsNotFoundException;
 import prointern.ProinternApplication.Internship.Model.Lesson;
 import prointern.ProinternApplication.Internship.Model.Repository.LessonRepository;
 
@@ -17,29 +18,38 @@ public class LessonService {
     
     @Transactional(readOnly = true)
     public List<Lesson> getAllLessons() {
-        return lessonRepository.findAllWithCourse();
+    	List<Lesson> listOfLesson = lessonRepository.findAllWithCourse();
+    	if(listOfLesson == null) throw new DetailsNotFoundException("No lessons found in database.");
+    	return listOfLesson;
     }
     
     @Transactional(readOnly = true)
     public List<Lesson> getLessonsByCourseId(Long courseId) {
-        return lessonRepository.findByCourseId(courseId);
+    	List<Lesson> listOfLesson = lessonRepository.findByCourseId(courseId);
+    	if(listOfLesson == null) throw new DetailsNotFoundException("Lesson with course id "+courseId+" is not found.");
+    	return listOfLesson;
     }
     
     @Transactional(readOnly = true)
     public Optional<Lesson> getLessonById(Long id) {
-        Lesson lesson = lessonRepository.findByIdWithCourse(id);
-        return Optional.ofNullable(lesson);
+    	Optional<Lesson> lesson = Optional.ofNullable(lessonRepository.findByIdWithCourse(id));
+        if(lesson == null) throw new DetailsNotFoundException("Lesson with id "+id+" is not found.");
+    	return lesson;
     }
     
     @Transactional
     public Lesson saveLesson(Lesson lesson) {
         Lesson savedLesson = lessonRepository.save(lesson);
+        if(savedLesson == null) throw new DetailsNotFoundException("Unable to save");
         // Force the reload with the course
         return lessonRepository.findByIdWithCourse(savedLesson.getId());
     }
     
     @Transactional
-    public void deleteLesson(Long id) {
+    public String deleteLesson(Long id) {
+    	Optional<Lesson> lesson = lessonRepository.findById(id);
+    	 if(lesson == null) throw new DetailsNotFoundException("Lesson with id "+id+" is not found to delete.");
         lessonRepository.deleteById(id);
+        return "Lesson deleted successfully.";
     }
 }

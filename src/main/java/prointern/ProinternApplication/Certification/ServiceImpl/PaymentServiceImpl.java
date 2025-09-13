@@ -12,56 +12,56 @@ import prointern.ProinternApplication.Certification.Repository.PaymentRepository
 import prointern.ProinternApplication.Certification.Repository.StudentRepository;
 import prointern.ProinternApplication.Certification.Repository.TrainingRepository;
 import prointern.ProinternApplication.Certification.Service.PaymentService;
+import prointern.ProinternApplication.Exception.DetailsNotFoundException;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
 
-    private final PaymentRepository paymentRepository;
-    private final StudentRepository studentRepository;
-    private final TrainingRepository trainingRepository;
+	private final PaymentRepository paymentRepository;
+	private final StudentRepository studentRepository;
+	private final TrainingRepository trainingRepository;
 
-    public PaymentServiceImpl(PaymentRepository paymentRepository,
-                              StudentRepository studentRepository,
-                              TrainingRepository trainingRepository) {
-        this.paymentRepository = paymentRepository;
-        this.studentRepository = studentRepository;
-        this.trainingRepository = trainingRepository;
-    }
+	public PaymentServiceImpl(PaymentRepository paymentRepository, StudentRepository studentRepository,
+			TrainingRepository trainingRepository) {
+		this.paymentRepository = paymentRepository;
+		this.studentRepository = studentRepository;
+		this.trainingRepository = trainingRepository;
+	}
 
-    @Override
-    public Payment makePayment(Long studentId, Long trainingId, double amount) {
-        Student student = studentRepository.findById(studentId)
-                .orElseThrow(() -> new RuntimeException("Student not found"));
-        Training training = trainingRepository.findById(trainingId)
-                .orElseThrow(() -> new RuntimeException("Training not found"));
+	@Override
+	public Payment makePayment(Long studentId, Long trainingId, double amount) {
+		Student student = studentRepository.findById(studentId)
+				.orElseThrow(() -> new DetailsNotFoundException("Student not found"));
+		Training training = trainingRepository.findById(trainingId)
+				.orElseThrow(() -> new DetailsNotFoundException("Training not found"));
 
-        Payment payment = new Payment();
-        payment.setAmount(amount);
-        payment.setPaymentDate(LocalDate.now());
-        payment.setStudent(student);
-        payment.setTraining(training);
+		Payment payment = new Payment();
+		payment.setAmount(amount);
+		payment.setPaymentDate(LocalDate.now());
+		payment.setStudent(student);
+		payment.setTraining(training);
 
-        return paymentRepository.save(payment);
-    }
+		return paymentRepository.save(payment);
+	}
 
-    @Override
-    public List<Payment> getAllPayments() {
-        return paymentRepository.findAll();
-    }
+	@Override
+	public List<Payment> getAllPayments() {
+		return paymentRepository.findAll();
+	}
 
-    @Override
-    public List<Payment> getPaymentsByStudent(Long studentId) {
-        return paymentRepository.findByStudentId(studentId);
-    }
+	@Override
+	public List<Payment> getPaymentsByStudent(Long studentId) {
+		return paymentRepository.findByStudentId(studentId);
+	}
 
-    @Override
-    public List<Payment> getPaymentsByTraining(Long trainingId) {
-        return paymentRepository.findByTrainingId(trainingId);
-    }
+	@Override
+	public List<Payment> getPaymentsByTraining(Long trainingId) {
+		return paymentRepository.findByTrainingId(trainingId);
+	}
 
-    @Override
-    public Payment getPaymentById(Long paymentId) {
-        return paymentRepository.findById(paymentId)
-                .orElseThrow(() -> new RuntimeException("Payment not found"));
-    }
+	@Override
+	public Payment getPaymentById(Long paymentId) {
+		return paymentRepository.findById(paymentId)
+				.orElseThrow(() -> new DetailsNotFoundException("Payment not found"));
+	}
 }

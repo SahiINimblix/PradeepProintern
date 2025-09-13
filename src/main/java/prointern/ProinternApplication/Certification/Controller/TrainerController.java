@@ -51,8 +51,8 @@ public class TrainerController {
 
     @DeleteMapping("/{id}")
     @Validated
-    public ResponseEntity<Void> deleteTrainer(@PathVariable Long id) {
-        trainerService.deleteTrainer(id);
-        return ResponseEntity.noContent().build();
+    public String deleteTrainer(@PathVariable Long id) {
+        return trainerService.deleteTrainer(id);
+//        return ResponseEntity.noContent().build();
     }
 }

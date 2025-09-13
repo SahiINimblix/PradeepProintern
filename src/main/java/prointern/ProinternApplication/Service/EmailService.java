@@ -7,6 +7,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import prointern.ProinternApplication.Exception.DetailsNotFoundException;
+
 @Service
 public class EmailService {
 	
@@ -27,7 +29,7 @@ public class EmailService {
 			javaMailSender.send(mail);
 		} catch (Exception e) {
 //			return ResponseEntity.badRequest().body("Exception while sendEmail: "+e.getMessage());
-			System.err.print("Exception while sendEmail:"+ e);
+			throw new DetailsNotFoundException("Exception while sendEmail:"+ e);
 		}
 		return code;
 	}
@@ -44,7 +46,7 @@ public class EmailService {
 			javaMailSender.send(message);
 		} catch (Exception e) {
 //			return ResponseEntity.badRequest().body("Exception while sendEmail: "+e.getMessage());
-			System.err.print("Exception while sendEmail:"+ e);
+			throw new DetailsNotFoundException("Exception while sendEmail:"+ e);
 		}
 		return resetUrl;
 	}

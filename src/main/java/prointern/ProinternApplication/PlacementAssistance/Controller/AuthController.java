@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import prointern.ProinternApplication.Exception.DetailsNotFoundException;
 import prointern.ProinternApplication.Model.User;
 import prointern.ProinternApplication.PlacementAssistance.Service.AuthService;
 import prointern.ProinternApplication.PlacementAssistance.dto.LoginRequest;
@@ -31,10 +32,10 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest req) {
         if (req.getUsername() == null || req.getPassword() == null) {
-            return ResponseEntity.badRequest().body("username and password required");
+        	throw new DetailsNotFoundException("Username and password required");
         }
         if (userRepository.existsByUsername(req.getUsername())) {
-            return ResponseEntity.status(409).body("username already exists");
+        	throw new DetailsNotFoundException("Username already exists");
         }
         User u = authService.register(req.getUsername(), req.getPassword());
         return ResponseEntity.ok("registered: " + u.getUsername());
@@ -46,7 +47,7 @@ public class AuthController {
         if (token.isPresent()) {
             return ResponseEntity.ok(new LoginResponse(token.get()));
         } else {
-            return ResponseEntity.status(401).body("invalid credentials");
+        	throw new DetailsNotFoundException("Invalid credentials");
         }
     }
 }

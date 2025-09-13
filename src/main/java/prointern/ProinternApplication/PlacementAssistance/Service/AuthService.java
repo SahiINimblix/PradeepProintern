@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import prointern.ProinternApplication.Exception.DetailsNotFoundException;
 import prointern.ProinternApplication.Model.User;
 import prointern.ProinternApplication.Repository.UserRepository;
 
@@ -38,7 +39,7 @@ public class AuthService {
     }
 
     public Optional<User> findByToken(String token) {
-        if (token == null) return Optional.empty();
+        if (token == null)throw new DetailsNotFoundException("Invalid token or not found");
         return userRepository.findByToken(token);
     }
 }

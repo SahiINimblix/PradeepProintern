@@ -14,8 +14,15 @@ public class UserExceptionHandler {
 	
 	@ExceptionHandler(UserNotFoundException.class)
 	public ResponseEntity<ErrorMessage> userNotFoundExce(Exception exception, WebRequest request) {
-		ErrorMessage e =new ErrorMessage(HttpStatus.NOT_ACCEPTABLE.value(), new Date(), exception.getMessage(), request.getDescription(false));
+		ErrorMessage e =new ErrorMessage(HttpStatus.NOT_FOUND.value(), new Date(), exception.getMessage(), request.getDescription(false));
 //		return new ResponseEntity<ErrorMessage>(e, HttpStatus.CONFLICT);//here the status will be written in the right side
-		return new ResponseEntity<ErrorMessage>(e, HttpStatus.NOT_ACCEPTABLE);
+		return new ResponseEntity<ErrorMessage>(e, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(DetailsNotFoundException.class)
+	public ResponseEntity<ErrorMessage> detailNotFoundExce(Exception exception, WebRequest request) {
+		ErrorMessage e =new ErrorMessage(HttpStatus.NOT_FOUND.value(), new Date(), exception.getMessage(), request.getDescription(false));
+//		return new ResponseEntity<ErrorMessage>(e, HttpStatus.CONFLICT);//here the status will be written in the right side
+		return new ResponseEntity<ErrorMessage>(e, HttpStatus.NOT_FOUND);
 	}
 }

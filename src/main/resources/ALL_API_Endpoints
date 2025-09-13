@@ -1,0 +1,112 @@
+						***************************
+						|| PROINTERN APPLICATION ||
+						***************************
+1. ADMIN CONTROLLER:-
+---------------------
+	To get all user details : http://localhost:8080/admin/allUserDetails			[METHOD: GET]
+	
+2. NOTIFIER CONTROLLER:-
+------------------------
+	To create all notifications: http://localhost:8080/api/subscribe/save		[METHOD: POST, REQUEST_BODY(Notifier)]
+	
+3. USER CONTROLLER:-
+--------------------
+	To sign up for new user: http://localhost:8080/api/auth/signup		[METHOD: POST, REQUEST_BODY(USER)]
+	To verify email of new signed up user: http://localhost:8080/api/auth/verify	[METHOD: POST, REQUEST_PARAM(OTP)]
+	To get reset link, forgot password email entry: http://localhost:8080/api/auth/forgot-password	[METHOD: POST, REQUEST_PARAM(email)]
+	To reset the password of registered user: http://localhost:8080/api/auth/reset-password	[METHOD: PUT, REQUEST_PARAM(TOKEN,NEW-PASSWORD)]
+	To GET USERS by email: http://localhost:8080/api/auth/getByEmail	[METHOD: GET]
+	To login of registered user: http://localhost:8080/api/auth/login	[METHOD: GET, REQUEST_PARAM(email,password)]
+	
+4. CERTIFICATE CONTROLLER:-
+---------------------------
+	Generate certificate for a student after payment & test: http://localhost:8080/api/certificates/generate/{trainingId}/student/{studentId}		[METHOD: POST, PATH_VARIABLE(trainingId,studentId),REQUEST_PARAM(score,status,paymentId)]
+	Get single certificate: http://localhost:8080/api/certificates/{id}			[METHOD: GET, Path_variable(id)]
+	Download certificate as PDF (direct file download): http://localhost:8080/api/certificates/{id}/download	[METHOD: GET, Path_variable(id)]
+	Get Base64 version of certificate : http://localhost:8080/api/certificates/{id}/download/base64			[METHOD: GET, Path_variable(id)]
+	Get all certificates: http://localhost:8080/api/certificates
+	
+5. PAYMENT CONTROLLER:-
+-----------------------
+	Make a new payment for a student in a training: http://localhost:8080/api/payments/student/{studentId}/training/{trainingId}		[METHOD:POST, PATH_VARIABLE(studentId,trainingId),RequestParam(amount)]
+	Get all payments: http://localhost:8080/api/payments	[METHOD: GET]
+	Get payments made by a student: http://localhost:8080/api/payments/student/{studentId}	[METHOD: GET]
+	Get payments for a specific training: http://localhost:8080/api/payments/training/{trainingId}	[METHOD: GET]
+	Get a single payment by ID: http://localhost:8080/api/payments/{paymentId}	[METHOD: GET]
+	
+6. STUDENT CONTROLLER:-
+-----------------------
+	To create a student: http://localhost:8080/student/add		[METHOD:POST, REQUEST_BODY(student)]
+	To get a student by id: http://localhost:8080/student/all	[METHOD:GET]
+	To update student: http://localhost:8080/student/update/{id}	[METHOD:PUT,Path_variable(id),Request_body(student)]
+	To delete student: http://localhost:8080/student/{id}	[METHOD:PUT,Path_variable(id)]
+	
+7.  TESTSTATUS CONTROLLER:-
+---------------------------
+	Record test result for a student in a training: http://localhost:8080/api/test-status/training/{trainingId}/student/{studentId}	[METHOD: POST,Path_variable(trainingId,studentId),Request_param(score,status,paymentId)]
+	Get test results (certificates) of a student: http://localhost:8080/api/test-status/student/{studentId}		[METHOD: GET,Path_variable(studentId)]
+	Get all test results for a training: http://localhost:8080/api/test-status/training/{trainingId}		[METHOD: GET,Path_variable(trainingId)]
+	
+8.  TRAINING CONTROLLER:-
+---------------------------
+	To assign training: http://localhost:8080/api/training/assign/{studentId}/{trainerId}	[METHOD: POST,Path_variable(studentId,trainerId),Request_body(Training)]
+	To get training by id: http://localhost:8080/api/training/{id}				[METHOD:GET,Path_variable(id)]
+	To get all training: http://localhost:8080/api/training					[METHOD:GET]
+	To update completion status: http://localhost:8080/api/training/{id}/completion		[METHOD:PUT]
+	To delete training: http://localhost:8080/api/training/{id}		[METHOD:DELETE]
+	
+9. CODE EXECUTION CONTROLLER:-
+------------------------------
+	To execute codes: http://localhost:8080/api/execute		[METHOD: POST]
+	
+10. COURSE CONTROLLER:-
+-----------------------
+	To get all courses: http://localhost:8080/api/courses	[METHOD: GET]
+	To get course by id: http://localhost:8080/api/courses/{id}	[METHOD: GET, Path_variable(id)]
+	To create course: http://localhost:8080/api/courses		[METHOD:POST Request_body(course)]
+	To update course: http://localhost:8080/api/courses/{id}	[METHOD: PUT,Path_variable(id),Request_Body(courseDetails)]
+	To delete course: http://localhost:8080/api/courses/{id}	[METHOD: DELETE,Path_variable(id)]
+	
+11. LESSON CONTROLLER:-
+-----------------------
+	To get all lessons: http://localhost:8080/api/lessons									[METHOD: GET]
+	To get all lessons by Id: http://localhost:8080/api/lessons/{id}						[METHOD: GET, Path_variable(id)]
+	To get lessons by course id: http://localhost:8080/api/lessons/course/{courseId}		[METHOD: GET, Path_variable(courseId)]
+	To create lessons: http://localhost:8080/api/lessons									[METHOD:POST Request_body(lesson)]
+	To update lessons: http://localhost:8080/api/lessons/{id}				[METHOD: PUT,Path_variable(id),Request_Body(lessonDetails)]
+	To delete lessons: http://localhost:8080/api/lessons/{id}								[METHOD: DELETE,Path_variable(id)]
+	
+12. TASK CONTROLLER:-
+-----------------------
+	To get all tasks: http://localhost:8080/api/tasks				[METHOD: GET]
+	To get tasks by id: http://localhost:8080/api/tasks/{id}		[METHOD: GET, Path_variable(id)]
+	To create tasks: http://localhost:8080/api/tasks				[METHOD:POST Request_body(task)]
+	To update tasks: http://localhost:8080/api/tasks/{id}			[METHOD: PUT,Path_variable(id),Request_Body(taskDetails)]
+	To delete tasks: http://localhost:8080/api/tasks/{id}			[METHOD: DELETE,Path_variable(id)]
+	
+13. AUTH CONTROLLER:-
+-----------------------
+	To register: http://localhost:8080/api/auth/register			[METHOD: POST,Request_Body(RegisterRequest req)]
+	To get tasks by id: http://localhost:8080/api/auth/login		[METHOD: POST, Request_Body(LoginRequest req)]
+	
+14. QUIZ CONTROLLER:-
+-----------------------
+	To start quiz: http://localhost:8080/api/quiz/start			[METHOD: GET,Request_Header(authorization)]
+	To submit quiz: http://localhost:8080/api/quiz/submit	[METHOD: POST, Request_Header(authorization), Request_Body(SubmitQuizRequest req)]
+	To get attempt: http://localhost:8080/api/quiz/attempt/{id}		[METHOD: GET, Request_Header(authorization), Path_variable(id)]
+	
+14. QUESTION CONTROLLER:-
+-----------------------
+	To start questions: http://localhost:8080/api/questions/{topic}			[METHOD: GET,Path_variable(topic)]
+	
+14. QUESTION CONTROLLER:-
+-----------------------
+	To start videos: http://localhost:8080/api/videos			[METHOD: GET]
+	To add videos: http://localhost:8080/api/videos				[METHOD: POST, Request_Body(video)]
+	
+	
+	
+	
+	
+	
+	

@@ -10,5 +10,5 @@ public interface TrainingService {
     Training getTrainingById(Long id);
     List<Training> getAllTrainings();
     Training updateCompletionStatus(Long trainingId, boolean status);
-    void deleteTraining(Long id);
+    String deleteTraining(Long id);
 }

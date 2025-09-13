@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import prointern.ProinternApplication.QuestionApi.Model.Question;
+import prointern.ProinternApplication.QuestionApi.Model.quizQuestions;
 import prointern.ProinternApplication.QuestionApi.Service.QuestionService;
 
 @RestController
-@RequestMapping("/api/questions")
+@RequestMapping("/api/quizQuestions")
 public class QuestionController {
 	private final QuestionService questionService;
 	
@@ -19,7 +19,7 @@ public class QuestionController {
 		this.questionService=questionService;
 	}
 	@GetMapping("/{topic}")
-	public List<Question> getQuestions(@PathVariable("topic") String topic) {
+	public List<quizQuestions> getQuestions(@PathVariable("topic") String topic) {
 		return questionService.getRandomQuestions(topic);
 	}
 	

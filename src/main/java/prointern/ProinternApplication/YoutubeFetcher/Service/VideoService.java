@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import prointern.ProinternApplication.Exception.DetailsNotFoundException;
 import prointern.ProinternApplication.YoutubeFetcher.Model.Video;
 import prointern.ProinternApplication.YoutubeFetcher.Repository.VideoRepository;
 
@@ -15,10 +16,14 @@ public class VideoService {
     private VideoRepository videoRepository;
 
     public List<Video> getAllVideos() {
-        return videoRepository.findAll();
+    	List<Video> listOfVideos = videoRepository.findAll();
+    	if(listOfVideos==null) throw new DetailsNotFoundException("No videos availbale right now.");
+    	return listOfVideos;
     }
 
     public Video saveVideo(Video video) {
-        return videoRepository.save(video);
+        Video video1 = videoRepository.save(video);
+        if(video1 == null) throw new DetailsNotFoundException("Unable to save.");
+        return video1;
     }
 }

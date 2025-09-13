@@ -1,7 +1,7 @@
 package prointern.ProinternApplication.Exception;
 
 public class UserNotFoundException extends RuntimeException {
-	private static final long SerialVersionUID = 1;
+	private static final long serialVersionUID = 1L;
 
 	public UserNotFoundException(String mesg) {
 		super(mesg);

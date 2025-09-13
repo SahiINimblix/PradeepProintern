@@ -52,12 +52,13 @@ public class CourseController {
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCourse(@PathVariable Long id) {
-        if (courseService.getCourseById(id).isPresent()) {
-            courseService.deleteCourse(id);
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public String deleteCourse(@PathVariable Long id) {
+//        if (courseService.getCourseById(id).isPresent()) {
+//            courseService.deleteCourse(id);
+//            return ResponseEntity.ok().build();
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+    	return courseService.deleteCourse(id);
     }
 }

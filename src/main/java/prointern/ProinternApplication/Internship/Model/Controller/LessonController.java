@@ -80,12 +80,13 @@ public class LessonController {
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteLesson(@PathVariable Long id) {
-        if (lessonService.getLessonById(id).isPresent()) {
-            lessonService.deleteLesson(id);
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public String deleteLesson(@PathVariable Long id) {
+//        if (lessonService.getLessonById(id).isPresent()) {
+//            lessonService.deleteLesson(id);
+//            return ResponseEntity.ok().build();
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+    	return lessonService.deleteLesson(id);
     }
 }

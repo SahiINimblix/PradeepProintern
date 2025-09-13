@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name="questions")
-public class Question {
+@Table(name="quizQuestions")
+public class quizQuestions {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +36,7 @@ public class Question {
     // 0 for A, 1 for B, 2 for C, 3 for D
     private int correctOptionIndex;
     
-    public Question(String text, String optionA, String optionB, String optionC, String optionD, int correctOptionIndex) {
+    public quizQuestions(String text, String optionA, String optionB, String optionC, String optionD, int correctOptionIndex) {
       this.text = text;
       this.optionA = optionA;
       this.optionB = optionB;

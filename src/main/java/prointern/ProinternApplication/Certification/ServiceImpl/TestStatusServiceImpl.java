@@ -15,6 +15,7 @@ import prointern.ProinternApplication.Certification.Repository.PaymentRepository
 import prointern.ProinternApplication.Certification.Repository.StudentRepository;
 import prointern.ProinternApplication.Certification.Repository.TrainingRepository;
 import prointern.ProinternApplication.Certification.Service.TestStatusService;
+import prointern.ProinternApplication.Exception.DetailsNotFoundException;
 
 @Service
 public class TestStatusServiceImpl implements TestStatusService {
@@ -37,20 +38,20 @@ public class TestStatusServiceImpl implements TestStatusService {
     @Override
     public Certificate recordTestResult(Long trainingId, Long studentId, double score, String status, Long paymentId) {
         Student student = studentRepository.findById(studentId)
-                .orElseThrow(() -> new RuntimeException("Student not found with id: " + studentId));
+                .orElseThrow(() -> new DetailsNotFoundException("Student not found with id: " + studentId));
 
         Training training = trainingRepository.findById(trainingId)
-                .orElseThrow(() -> new RuntimeException("Training not found with id: " + trainingId));
+                .orElseThrow(() -> new DetailsNotFoundException("Training not found with id: " + trainingId));
 
         Payment payment = paymentRepository.findById(paymentId)
-                .orElseThrow(() -> new RuntimeException("Payment not found with id: " + paymentId));
+                .orElseThrow(() -> new DetailsNotFoundException("Payment not found with id: " + paymentId));
 
         // 🔹 Convert string to Enum
         TestStatus testStatus;
         try {
             testStatus = TestStatus.valueOf(status.toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new RuntimeException("Invalid TestStatus: " + status);
+            throw new DetailsNotFoundException("Invalid TestStatus: " + status);
         }
 
         Certificate certificate = new Certificate();
@@ -67,11 +68,15 @@ public class TestStatusServiceImpl implements TestStatusService {
 
     @Override
     public List<Certificate> getTestResultsByStudent(Long studentId) {
-        return certificateRepository.findByStudentId(studentId);
+    	List<Certificate> certificate = certificateRepository.findByStudentId(studentId);
+    	if(certificate==null) throw new DetailsNotFoundException("Certificate of student with id "+studentId+" is not found");
+    	return certificate;
     }
 
     @Override
     public List<Certificate> getTestResultsByTraining(Long trainingId) {
-        return certificateRepository.findByTrainingId(trainingId);
+        List<Certificate> certificate = certificateRepository.findByTrainingId(trainingId);
+    	if(certificate==null) throw new DetailsNotFoundException("Certificate of training with id "+trainingId+" is not found");
+    	return certificate;
     }
 }

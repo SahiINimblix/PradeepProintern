@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import prointern.ProinternApplication.Certification.Model.Trainer;
 import prointern.ProinternApplication.Certification.Repository.TrainerRepository;
 import prointern.ProinternApplication.Certification.Service.TrainerService;
+import prointern.ProinternApplication.Exception.DetailsNotFoundException;
 
 @Service
 public class TrainerServiceimpl implements TrainerService {
@@ -20,13 +21,15 @@ public class TrainerServiceimpl implements TrainerService {
 
     @Override
     public Trainer createTrainer(Trainer trainer) {
-        return trainerRepository.save(trainer);
+    	Trainer trainerDetails = trainerRepository.save(trainer);
+    	if(trainerDetails==null) throw new DetailsNotFoundException("Unable to save trainer details.");
+    	return trainerDetails;
     }
 
     @Override
     public Trainer getTrainerById(Long id) {
         return trainerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Trainer not found with id: " + id));
+                .orElseThrow(() -> new DetailsNotFoundException("Trainer not found with id: " + id));
     }
 
     @Override
@@ -37,15 +40,18 @@ public class TrainerServiceimpl implements TrainerService {
     @Override
     public Trainer updateTrainer(Long id, Trainer updatedTrainer) {
         Trainer trainer = getTrainerById(id);
+        if(trainer == null) throw new DetailsNotFoundException("Trainer not found with id "+id);
         trainer.setName(updatedTrainer.getName());
         trainer.setExpertise(updatedTrainer.getExpertise());
         return trainerRepository.save(trainer);
     }
 
     @Override
-    public void deleteTrainer(Long id) {
+    public String deleteTrainer(Long id) {
         Trainer trainer = getTrainerById(id);
+        if(trainer==null) throw new DetailsNotFoundException("Unable to delete");
         trainerRepository.delete(trainer);
+        return "Trainer Details deleted successfully";
     }
 
 }

@@ -1,5 +1,6 @@
 package prointern.ProinternApplication.Internship.Model.Service;
 
+import prointern.ProinternApplication.Exception.DetailsNotFoundException;
 import prointern.ProinternApplication.Internship.Model.Task;
 import prointern.ProinternApplication.Internship.Model.Repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,7 @@ public class CodeExecutionService {
     public String executeCode(String code, String language, Long taskId) {
         try {
             Task task = taskRepository.findById(taskId)
-                    .orElseThrow(() -> new RuntimeException("Task not found"));
-            
+                    .orElseThrow(() -> new DetailsNotFoundException("Task not found"));
             if ("java".equalsIgnoreCase(language)) {
                 return executeJavaCode(code, task);
             } else if ("python".equalsIgnoreCase(language)) {
@@ -26,7 +26,7 @@ public class CodeExecutionService {
                 return "Unsupported language: " + language;
             }
         } catch (Exception e) {
-            return "Error: " + e.getMessage();
+            throw new DetailsNotFoundException("Exception:"+e);
         }
     }
     
@@ -103,7 +103,7 @@ public class CodeExecutionService {
                     if (reversedPart.equals("dlroW olleH")) {
                         return "SUCCESS: Output matches expected result!\n" + result;
                     } else {
-                        return "FAILED: Output does not match.\nExpected: dlroW olleH\nYour output: " + result;
+                        throw new DetailsNotFoundException("FAILED: Output does not match.\nExpected: dlroW olleH\nYour output: " + result);
                     }
                 }
                 
@@ -163,7 +163,7 @@ public class CodeExecutionService {
                 return "Execution completed:\n" + output.toString();
             }
         } catch (IOException | InterruptedException e) {
-            return "Execution error: " + e.getMessage();
+            throw new DetailsNotFoundException("Execution error: " + e.getMessage());
         } finally {
             // Clean up temporary files
             File pythonFile = new File("solution.py");
