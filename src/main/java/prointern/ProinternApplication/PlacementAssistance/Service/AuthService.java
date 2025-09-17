@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import prointern.ProinternApplication.Exception.DetailsNotFoundException;
+import prointern.ProinternApplication.Exception.OperationFailedException;
 import prointern.ProinternApplication.Model.User;
 import prointern.ProinternApplication.Repository.UserRepository;
 
@@ -18,23 +19,26 @@ public class AuthService {
         this.userRepository = userRepository;
     }
 
-    public User register(String username, String password) {
+    public String register(String username, String password) {
         String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
         User u = new User(username, hashed);
-        return userRepository.save(u);
+        User user = userRepository.save(u);
+        if(user==null) throw new OperationFailedException("Unable to save");
+        return "Registration successfull";
     }
 
     public Optional<String> login(String username, String password) {
         Optional<User> opt = userRepository.findByUsername(username);
-        if (opt== null) return Optional.empty();
+        if (opt== null) throw new DetailsNotFoundException("Usename not found in database");
         User u = opt.get();
         if (BCrypt.checkpw(password, u.getPasswordHash())) {
             String token = UUID.randomUUID().toString();
             u.setToken(token);
-            userRepository.save(u);
-            return Optional.of(token);
+            User user =userRepository.save(u);
+            if(user==null) throw new OperationFailedException("Unable to save");
+            return Optional.ofNullable(token);
         } else {
-            return Optional.empty();
+            throw new DetailsNotFoundException("Invalid password");
         }
     }
 

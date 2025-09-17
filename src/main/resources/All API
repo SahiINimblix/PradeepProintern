@@ -15,7 +15,7 @@
 	To verify email of new signed up user: http://localhost:8080/api/auth/verify					[METHOD: POST, REQUEST_PARAM(OTP)]
 	To get reset link, forgot password email entry: http://localhost:8080/api/auth/forgot-password	[METHOD: POST, REQUEST_PARAM(email)]
 	To reset the password of registered user: http://localhost:8080/api/auth/reset-password			[METHOD: PUT, REQUEST_PARAM(TOKEN,NEW-PASSWORD)]
-	To GET USERS by email: http://localhost:8080/api/auth/getByEmail								[METHOD: GET]
+	To GET USERS by email: http://localhost:8080/api/auth/getByEmail								[METHOD: GET, REQUEST_PARAM(email)]
 	To login of registered user: http://localhost:8080/api/auth/login								[METHOD: GET, REQUEST_PARAM(email,password)]
 	
 4. CERTIFICATE CONTROLLER:-
@@ -38,7 +38,7 @@
 -----------------------
 	To create a student: http://localhost:8080/student/add				[METHOD:POST, REQUEST_BODY(student)]
 	To get a student by id: http://localhost:8080/student/all			[METHOD:GET]
-	To update student: http://localhost:8080/student/update/{id}		[METHOD:PUT,Path_variable(id),Request_body(student)]
+	* To update student: http://localhost:8080/student/update/{id}		[METHOD:PUT,Path_variable(id),Request_body(student)]
 	To delete student: http://localhost:8080/student/{id}				[METHOD:PUT,Path_variable(id)]
 	
 7.  TESTSTATUS CONTROLLER:-
@@ -46,13 +46,21 @@
 	Record test result for a student in a training: http://localhost:8080/api/test-status/training/{trainingId}/student/{studentId}		[METHOD: POST,Path_variable(trainingId,studentId),Request_param(score,status,paymentId)]
 	Get test results (certificates) of a student: http://localhost:8080/api/test-status/student/{studentId}								[METHOD: GET,Path_variable(studentId)]
 	Get all test results for a training: http://localhost:8080/api/test-status/training/{trainingId}									[METHOD: GET,Path_variable(trainingId)]
+
+8.  TRAINER CONTROLLER:-
+---------------------------
+	To create a trainer: http://localhost:8080/api/trainer										[METHOD: POST,Request_body(trainer)]
+	To get trainer by id: http://localhost:8080/api/trainer/{id}								[METHOD:GET,Path_variable(id)]
+	To get all trainers: http://localhost:8080/api/trainer										[METHOD:GET]
+	To update trainer details by id: http://localhost:8080/api/trainer/{id}						[METHOD:PUT,Request_body(trainer)]
+	To delete trainer details by id: http://localhost:8080/api/trainer/{id}						[METHOD:DELETE,Path_variable(id)]
 	
 8.  TRAINING CONTROLLER:-
 ---------------------------
 	To assign training: http://localhost:8080/api/training/assign/{studentId}/{trainerId}		[METHOD: POST,Path_variable(studentId,trainerId),Request_body(Training)]
 	To get training by id: http://localhost:8080/api/training/{id}								[METHOD:GET,Path_variable(id)]
 	To get all training: http://localhost:8080/api/training										[METHOD:GET]
-	To update completion status: http://localhost:8080/api/training/{id}/completion				[METHOD:PUT]
+	To update completion status: http://localhost:8080/api/training/{id}/completion				[METHOD:PUT,REQUEST_PARAM(completionStatus-boolean)]
 	To delete training: http://localhost:8080/api/training/{id}									[METHOD:DELETE]
 	
 9. CODE EXECUTION CONTROLLER:-

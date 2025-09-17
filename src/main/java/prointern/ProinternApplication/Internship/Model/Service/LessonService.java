@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import prointern.ProinternApplication.Exception.DetailsNotFoundException;
+import prointern.ProinternApplication.Exception.OperationFailedException;
 import prointern.ProinternApplication.Internship.Model.Lesson;
 import prointern.ProinternApplication.Internship.Model.Repository.LessonRepository;
 
@@ -38,11 +39,12 @@ public class LessonService {
     }
     
     @Transactional
-    public Lesson saveLesson(Lesson lesson) {
+    public String saveLesson(Lesson lesson) {
         Lesson savedLesson = lessonRepository.save(lesson);
-        if(savedLesson == null) throw new DetailsNotFoundException("Unable to save");
+        if(savedLesson == null) throw new OperationFailedException("Unable to save");
         // Force the reload with the course
-        return lessonRepository.findByIdWithCourse(savedLesson.getId());
+//        return lessonRepository.findByIdWithCourse(savedLesson.getId());
+        return "Lesson saved successfully";
     }
     
     @Transactional
@@ -50,6 +52,7 @@ public class LessonService {
     	Optional<Lesson> lesson = lessonRepository.findById(id);
     	 if(lesson == null) throw new DetailsNotFoundException("Lesson with id "+id+" is not found to delete.");
         lessonRepository.deleteById(id);
+        if(lessonRepository.existsById(id)) throw new OperationFailedException("Unable to delete");
         return "Lesson deleted successfully.";
     }
 }

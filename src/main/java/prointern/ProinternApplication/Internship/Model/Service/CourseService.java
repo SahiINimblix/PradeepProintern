@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import prointern.ProinternApplication.Exception.DetailsNotFoundException;
+import prointern.ProinternApplication.Exception.OperationFailedException;
 import prointern.ProinternApplication.Internship.Model.Course;
 import prointern.ProinternApplication.Internship.Model.Repository.CourseRepository;
 
@@ -19,7 +20,7 @@ public class CourseService {
     @Transactional(readOnly = true)
     public List<Course> getAllCourses() {
     	List<Course> listOfCourse = courseRepository.findAll();
-    	if(listOfCourse==null)throw new DetailsNotFoundException("No courses found in database");
+    	if(listOfCourse==null) throw new DetailsNotFoundException("No courses found in database");
     	return listOfCourse;
     }
     
@@ -31,17 +32,17 @@ public class CourseService {
     }
     
     @Transactional
-    public Course saveCourse(Course course) {
+    public String saveCourse(Course course) {
         Course courseDetail = courseRepository.save(course);
-        if(courseDetail ==null) throw new DetailsNotFoundException("Unable to save");
-    	return courseDetail;
+        if(courseDetail ==null) throw new OperationFailedException("Unable to save");
+    	return "Course details saved successfully";
     }
     
     @Transactional
     public String deleteCourse(Long id) {
-    	Optional<Course> course =courseRepository.findById(id);
-    	if(course ==null) throw new DetailsNotFoundException("Unable to delete");
-        courseRepository.deleteById(id);
+    	Course course =courseRepository.findById(id).orElseThrow(()->new DetailsNotFoundException("Detils not found to delete"));
+        courseRepository.delete(course);
+        if(courseRepository.existsById(id)) throw new OperationFailedException("Unable to delete");
         return "Course deleted successfully.";
     }
 }

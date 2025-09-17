@@ -25,11 +25,10 @@ public class PaymentController {
 
     // Make a new payment for a student in a training
     @PostMapping("/student/{studentId}/training/{trainingId}")
-    public ResponseEntity<Payment> makePayment(@PathVariable("studentId") Long studentId,
+    public String makePayment(@PathVariable("studentId") Long studentId,
                                                @PathVariable("trainingId") Long trainingId,
                                                @RequestParam("amount") double amount) {
-        Payment payment = paymentService.makePayment(studentId, trainingId, amount);
-        return ResponseEntity.ok(payment);
+    	return paymentService.makePayment(studentId, trainingId, amount);
     }
 
     //  Get all payments

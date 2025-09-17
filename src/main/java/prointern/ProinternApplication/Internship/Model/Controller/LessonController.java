@@ -1,6 +1,7 @@
 package prointern.ProinternApplication.Internship.Model.Controller;
 
 import prointern.ProinternApplication.Exception.DetailsNotFoundException;
+import prointern.ProinternApplication.Exception.OperationFailedException;
 import prointern.ProinternApplication.Internship.Model.Course;
 import prointern.ProinternApplication.Internship.Model.Lesson;
 import prointern.ProinternApplication.Internship.Model.Service.CourseService;
@@ -38,7 +39,7 @@ public class LessonController {
     }
     
     @PostMapping
-    public ResponseEntity<Lesson> createLesson(@RequestBody Lesson lesson) {
+    public String createLesson(@RequestBody Lesson lesson) {
         // Check if course ID is provided
         if (lesson.getCourse() == null || lesson.getCourse().getId() == null) {
             throw new DetailsNotFoundException("Unable to create");
@@ -54,12 +55,12 @@ public class LessonController {
         lesson.setCourse(course.get());
         
         // Save the lesson
-        Lesson savedLesson = lessonService.saveLesson(lesson);
-        return ResponseEntity.ok(savedLesson);
+        return lessonService.saveLesson(lesson);
+//        return ResponseEntity.ok(savedLesson);
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<Lesson> updateLesson(@PathVariable("id") Long id, @RequestBody Lesson lessonDetails) {
+    public String updateLesson(@PathVariable("id") Long id, @RequestBody Lesson lessonDetails) {
         Optional<Lesson> lesson = lessonService.getLessonById(id);
         if (lesson.isPresent()) {
             Lesson updatedLesson = lesson.get();
@@ -74,9 +75,11 @@ public class LessonController {
                 }
             }
             
-            return ResponseEntity.ok(lessonService.saveLesson(updatedLesson));
+            String result = lessonService.saveLesson(updatedLesson);
+            if(result== null) throw new OperationFailedException("Unable to update");
+            return "Lesson updated successfully";
         } else {
-            return ResponseEntity.notFound().build();
+            throw new DetailsNotFoundException("Lesson not found with id "+id);
         }
     }
     

@@ -13,6 +13,7 @@ import prointern.ProinternApplication.Certification.Repository.StudentRepository
 import prointern.ProinternApplication.Certification.Repository.TrainingRepository;
 import prointern.ProinternApplication.Certification.Service.PaymentService;
 import prointern.ProinternApplication.Exception.DetailsNotFoundException;
+import prointern.ProinternApplication.Exception.OperationFailedException;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
@@ -29,7 +30,7 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public Payment makePayment(Long studentId, Long trainingId, double amount) {
+	public String makePayment(Long studentId, Long trainingId, double amount) {
 		Student student = studentRepository.findById(studentId)
 				.orElseThrow(() -> new DetailsNotFoundException("Student not found"));
 		Training training = trainingRepository.findById(trainingId)
@@ -41,27 +42,39 @@ public class PaymentServiceImpl implements PaymentService {
 		payment.setStudent(student);
 		payment.setTraining(training);
 
-		return paymentRepository.save(payment);
+		Payment payment1 = paymentRepository.save(payment);
+		if (payment1 == null)
+			throw new OperationFailedException("Unable to save payment");
+		return "Payment saved successfully";
 	}
 
 	@Override
 	public List<Payment> getAllPayments() {
-		return paymentRepository.findAll();
+		List<Payment> listOfPayments = paymentRepository.findAll();
+		if (listOfPayments.isEmpty())
+			throw new DetailsNotFoundException("No payments found in database");
+		return listOfPayments;
 	}
 
 	@Override
 	public List<Payment> getPaymentsByStudent(Long studentId) {
-		return paymentRepository.findByStudentId(studentId);
+		List<Payment> listOfPayment = paymentRepository.findByStudentId(studentId);
+		if (listOfPayment.isEmpty())
+			throw new DetailsNotFoundException("No payments found in database");
+		return listOfPayment;
 	}
 
 	@Override
 	public List<Payment> getPaymentsByTraining(Long trainingId) {
-		return paymentRepository.findByTrainingId(trainingId);
+		List<Payment> listOfPayment = paymentRepository.findByTrainingId(trainingId);
+		if (listOfPayment.isEmpty())
+			throw new DetailsNotFoundException("No payments found in database");
+		return listOfPayment;
 	}
 
 	@Override
 	public Payment getPaymentById(Long paymentId) {
 		return paymentRepository.findById(paymentId)
-				.orElseThrow(() -> new DetailsNotFoundException("Payment not found"));
+				.orElseThrow(() -> new DetailsNotFoundException("Payment not found with id: "+paymentId));
 	}
 }

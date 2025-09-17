@@ -16,6 +16,7 @@ import prointern.ProinternApplication.Certification.Repository.StudentRepository
 import prointern.ProinternApplication.Certification.Repository.TrainingRepository;
 import prointern.ProinternApplication.Certification.Service.TestStatusService;
 import prointern.ProinternApplication.Exception.DetailsNotFoundException;
+import prointern.ProinternApplication.Exception.OperationFailedException;
 
 @Service
 public class TestStatusServiceImpl implements TestStatusService {
@@ -36,7 +37,7 @@ public class TestStatusServiceImpl implements TestStatusService {
     }
 
     @Override
-    public Certificate recordTestResult(Long trainingId, Long studentId, double score, String status, Long paymentId) {
+    public String recordTestResult(Long trainingId, Long studentId, double score, String status, Long paymentId) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new DetailsNotFoundException("Student not found with id: " + studentId));
 
@@ -63,7 +64,9 @@ public class TestStatusServiceImpl implements TestStatusService {
         certificate.setScore(score);
         certificate.setTestStatus(testStatus);
 
-        return certificateRepository.save(certificate);
+        Certificate certificate1 = certificateRepository.save(certificate);
+        if(certificate1==null) throw new OperationFailedException("Error in saving details");
+        return "Certificate saved successfully";
     }
 
     @Override

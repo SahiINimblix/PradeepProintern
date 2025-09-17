@@ -17,7 +17,7 @@ public class Student {
 
     @Email
     @NotNull(message = "Email is required")
-    @Column(unique = true)
+//    @Column(unique = true)
     private String email;
 
     // Owning side is Training, so here we use mappedBy

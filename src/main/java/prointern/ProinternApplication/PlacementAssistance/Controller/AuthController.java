@@ -30,15 +30,14 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest req) {
+    public String register(@RequestBody RegisterRequest req) {
         if (req.getUsername() == null || req.getPassword() == null) {
         	throw new DetailsNotFoundException("Username and password required");
         }
         if (userRepository.existsByUsername(req.getUsername())) {
         	throw new DetailsNotFoundException("Username already exists");
         }
-        User u = authService.register(req.getUsername(), req.getPassword());
-        return ResponseEntity.ok("registered: " + u.getUsername());
+        return authService.register(req.getUsername(), req.getPassword());
     }
 
     @PostMapping("/login")

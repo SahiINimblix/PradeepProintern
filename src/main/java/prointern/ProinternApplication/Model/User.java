@@ -27,7 +27,7 @@ public class User {
 	private Long id;
 	
 	@NotBlank(message = "Username is required")
-	@Column(unique = true, nullable=false)
+//	@Column(unique = true, nullable=false)
 	@Size(min = 2, max = 50, message = " Username must be between 2 and 50 characters")
     private String username;
 	
@@ -51,7 +51,7 @@ public class User {
     private String token;
     
     @Column(columnDefinition = "VARCHAR(10) DEFAULT 'UNVERIFIED'")
-    private String status;
+    private String status="UNVERIFIED";
     
     private int otp;
 

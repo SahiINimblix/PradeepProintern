@@ -17,7 +17,7 @@ public class NotifierController
     private NotifierService notifierService;
 
     @PostMapping("/save")
-    public Notifier createNotifier(@RequestBody Notifier notifier)
+    public String createNotifier(@RequestBody Notifier notifier)
     {
         return notifierService.saveNotifier(notifier);
     }

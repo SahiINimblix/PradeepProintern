@@ -1,6 +1,7 @@
 package prointern.ProinternApplication.Internship.Model.Service;
 
 import prointern.ProinternApplication.Exception.DetailsNotFoundException;
+import prointern.ProinternApplication.Exception.OperationFailedException;
 import prointern.ProinternApplication.Internship.Model.Task;
 import prointern.ProinternApplication.Internship.Model.Repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,7 +111,7 @@ public class CodeExecutionService {
                 return "Execution completed:\n" + result;
             }
         } catch (IOException | InterruptedException e) {
-            return "Execution error: " + e.getMessage();
+            throw new OperationFailedException("Execution error: " + e.getMessage());
         } finally {
             // Clean up temporary files
             File javaFile = new File("Solution.java");
@@ -163,7 +164,7 @@ public class CodeExecutionService {
                 return "Execution completed:\n" + output.toString();
             }
         } catch (IOException | InterruptedException e) {
-            throw new DetailsNotFoundException("Execution error: " + e.getMessage());
+            throw new OperationFailedException("Execution error: " + e.getMessage());
         } finally {
             // Clean up temporary files
             File pythonFile = new File("solution.py");

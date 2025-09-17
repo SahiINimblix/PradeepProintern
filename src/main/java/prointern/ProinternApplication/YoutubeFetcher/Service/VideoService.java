@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import prointern.ProinternApplication.Exception.DetailsNotFoundException;
+import prointern.ProinternApplication.Exception.OperationFailedException;
 import prointern.ProinternApplication.YoutubeFetcher.Model.Video;
 import prointern.ProinternApplication.YoutubeFetcher.Repository.VideoRepository;
 
@@ -21,9 +22,9 @@ public class VideoService {
     	return listOfVideos;
     }
 
-    public Video saveVideo(Video video) {
+    public String saveVideo(Video video) {
         Video video1 = videoRepository.save(video);
-        if(video1 == null) throw new DetailsNotFoundException("Unable to save.");
-        return video1;
+        if(video1 == null) throw new OperationFailedException("Unable to save.");
+        return "Video saved successfully";
     }
 }

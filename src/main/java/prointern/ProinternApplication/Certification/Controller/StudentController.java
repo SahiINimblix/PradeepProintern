@@ -32,9 +32,8 @@ public class StudentController {
 	}
 
 	@PostMapping("/add")
-	public ResponseEntity<Student> createStudent(@Valid @RequestBody Student student){
-		 Student saved = studentService.createStudent(student);
-		return ResponseEntity.ok(saved);
+	public String createStudent(@Valid @RequestBody Student student){
+		 return studentService.createStudent(student);
 	}
 
 
@@ -52,8 +51,8 @@ public class StudentController {
 
 	@PutMapping("update/{id}")
 	@Validated
-	public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student student) {
-		return ResponseEntity.ok(studentService.updateStudent(id, student));
+	public String updateStudent(@PathVariable Long id, @RequestBody Student student) {
+		return studentService.updateStudent(id, student);
 	}
 
 	@DeleteMapping("/{id}")

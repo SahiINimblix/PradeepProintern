@@ -28,8 +28,8 @@ public class TrainerController {
     }
 
     @PostMapping
-    public ResponseEntity<Trainer> createTrainer(@Valid @RequestBody Trainer trainer) {
-        return ResponseEntity.ok(trainerService.createTrainer(trainer));
+    public String createTrainer(@Valid @RequestBody Trainer trainer) {
+        return trainerService.createTrainer(trainer);
     }
 
     @GetMapping("/{id}")
@@ -45,8 +45,8 @@ public class TrainerController {
 
     @PutMapping("/{id}")
     @Validated
-    public ResponseEntity<Trainer> updateTrainer(@PathVariable("id") Long id, @RequestBody Trainer trainer) {
-        return ResponseEntity.ok(trainerService.updateTrainer(id, trainer));
+    public String updateTrainer(@PathVariable("id") Long id, @RequestBody Trainer trainer) {
+        return trainerService.updateTrainer(id, trainer);
     }
 
     @DeleteMapping("/{id}")

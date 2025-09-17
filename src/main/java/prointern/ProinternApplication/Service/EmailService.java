@@ -8,6 +8,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import prointern.ProinternApplication.Exception.DetailsNotFoundException;
+import prointern.ProinternApplication.Exception.OperationFailedException;
 
 @Service
 public class EmailService {
@@ -29,7 +30,7 @@ public class EmailService {
 			javaMailSender.send(mail);
 		} catch (Exception e) {
 //			return ResponseEntity.badRequest().body("Exception while sendEmail: "+e.getMessage());
-			throw new DetailsNotFoundException("Exception while sendEmail:"+ e);
+			throw new OperationFailedException("Exception while sendEmail:"+ e);
 		}
 		return code;
 	}
@@ -46,7 +47,7 @@ public class EmailService {
 			javaMailSender.send(message);
 		} catch (Exception e) {
 //			return ResponseEntity.badRequest().body("Exception while sendEmail: "+e.getMessage());
-			throw new DetailsNotFoundException("Exception while sendEmail:"+ e);
+			throw new OperationFailedException("Exception while sendEmail:"+ e);
 		}
 		return resetUrl;
 	}

@@ -2,6 +2,7 @@ package prointern.ProinternApplication.Internship.Model.Controller;
 
 import prointern.ProinternApplication.Internship.Model.Service.CourseService;
 import prointern.ProinternApplication.Exception.DetailsNotFoundException;
+import prointern.ProinternApplication.Exception.OperationFailedException;
 import prointern.ProinternApplication.Internship.Model.Course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,12 +33,12 @@ public class CourseController {
     }
     
     @PostMapping
-    public Course createCourse(@RequestBody Course course) {
+    public String createCourse(@RequestBody Course course) {
         return courseService.saveCourse(course);
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<Course> updateCourse(@PathVariable("id") Long id, @RequestBody Course courseDetails) {
+    public String updateCourse(@PathVariable("id") Long id, @RequestBody Course courseDetails) {
         Optional<Course> course = courseService.getCourseById(id);
         if (course.isPresent()) {
             Course updatedCourse = course.get();
@@ -46,7 +47,9 @@ public class CourseController {
             updatedCourse.setLessonsCount(courseDetails.getLessonsCount());
             updatedCourse.setPrice(courseDetails.getPrice());
             updatedCourse.setCompletedLessons(courseDetails.getCompletedLessons());
-            return ResponseEntity.ok(courseService.saveCourse(updatedCourse));
+            String result = courseService.saveCourse(updatedCourse);
+            if(result== null) throw new OperationFailedException("Unable to update");
+            return "Course details updated successfully";
         } else {
             throw new DetailsNotFoundException("Unable to update");
         }

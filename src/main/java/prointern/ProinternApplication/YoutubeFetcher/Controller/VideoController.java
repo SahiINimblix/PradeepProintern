@@ -25,7 +25,7 @@ public class VideoController {
     }
 
     @PostMapping
-    public Video addVideo(@RequestBody Video video) {
+    public String addVideo(@RequestBody Video video) {
         return videoService.saveVideo(video);
     }
 }

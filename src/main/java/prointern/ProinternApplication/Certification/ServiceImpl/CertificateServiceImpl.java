@@ -21,6 +21,7 @@ import prointern.ProinternApplication.Certification.Repository.StudentRepository
 import prointern.ProinternApplication.Certification.Repository.TrainingRepository;
 import prointern.ProinternApplication.Certification.Service.CertificateService;
 import prointern.ProinternApplication.Exception.DetailsNotFoundException;
+import prointern.ProinternApplication.Exception.OperationFailedException;
 
 @Service
 public class CertificateServiceImpl implements CertificateService {
@@ -39,7 +40,7 @@ public class CertificateServiceImpl implements CertificateService {
 	}
 
 	@Override
-	public Certificate generateCertificate(Long trainingId, Long studentId, double score, String status,
+	public String generateCertificate(Long trainingId, Long studentId, double score, String status,
 			Long paymentId) {
 
 		Training training = trainingRepository.findById(trainingId)
@@ -72,7 +73,9 @@ public class CertificateServiceImpl implements CertificateService {
 		certificate.setScore(score);
 		certificate.setTestStatus(testStatus);
 
-		return certificateRepository.save(certificate);
+		Certificate certificate1 =  certificateRepository.save(certificate);
+		if(certificate1 == null) throw new OperationFailedException("Unable to save certificate");
+		return "Certificate saved successfully";
 	}
 
 	@Override
@@ -83,7 +86,9 @@ public class CertificateServiceImpl implements CertificateService {
 
 	@Override
 	public List<Certificate> getAllCertificates() {
-		return certificateRepository.findAll();
+		List<Certificate> listOfCertificates = certificateRepository.findAll();
+		if(listOfCertificates.isEmpty()) throw new DetailsNotFoundException("No certificate found in database");
+		return listOfCertificates;
 	}
 
 	@Override

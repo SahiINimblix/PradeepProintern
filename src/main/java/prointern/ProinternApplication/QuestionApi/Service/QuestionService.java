@@ -17,7 +17,7 @@ public class QuestionService {
 	}
 	public List<quizQuestions> getRandomQuestions(String topic){
 		List<quizQuestions> list = questionRepository.findRandomQuestionsByTopic(topic);
-		if(list == null) throw new DetailsNotFoundException("Something went wrong.");
+		if(list == null) throw new DetailsNotFoundException("Question not present in database");
 		return list;
 	
 	}

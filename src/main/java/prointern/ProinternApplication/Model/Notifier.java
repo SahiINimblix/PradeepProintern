@@ -1,35 +1,23 @@
 package prointern.ProinternApplication.Model;
 
-import jakarta.persistence.*; // JPA
+// JPA
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 @Entity
 public class Notifier
 {
     @Id
+    @Email
     String email;
 
     String name;
-
-    public Notifier() { }
-
-    public Notifier(String name, String email) {
-        this.name = name;
-        this.email = email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getName() {
-        return name;
-    }
+    
 }

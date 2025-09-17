@@ -15,7 +15,9 @@ public class Training {
     private String title; // <-- This is your course name
 
     private String description;
-    private boolean completionStatus;
+    
+    @Column(columnDefinition = "TEXT DEFAULT false")
+    private boolean completionStatus=false;
 
     @ManyToOne
     @JoinColumn(name = "trainer_id")

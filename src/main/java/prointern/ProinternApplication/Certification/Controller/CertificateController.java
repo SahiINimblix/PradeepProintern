@@ -29,16 +29,15 @@ public class CertificateController {
 
     // Generate certificate for a student after payment & test
     @PostMapping("/generate/{trainingId}/student/{studentId}")
-    public ResponseEntity<Certificate> generateCertificate(@PathVariable("trainingId") Long trainingId,
+    public String generateCertificate(@PathVariable("trainingId") Long trainingId,
                                                            @PathVariable("studentId") Long studentId,
                                                            @RequestParam("score") double score,
                                                            @RequestParam("status") String status,
                                                            @RequestParam("paymentId") Long paymentId) {
         // Call with correct parameter order
-        Certificate certificate = certificateService.generateCertificate(
+        return certificateService.generateCertificate(
                 trainingId, studentId, score, status, paymentId
         );
-        return ResponseEntity.ok(certificate);
     }
 
 

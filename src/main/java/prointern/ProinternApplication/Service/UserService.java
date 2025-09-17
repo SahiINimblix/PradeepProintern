@@ -9,4 +9,6 @@ public interface UserService {
 	public String resetPasswordByEmail(String email,String password);
 	public String loginUser(String email,String password);
 	public void saveOTP(int otp,String email);
+	public void verificationUpdate(String email);
+	public User getUserByOTP(int storedOtp);
 }

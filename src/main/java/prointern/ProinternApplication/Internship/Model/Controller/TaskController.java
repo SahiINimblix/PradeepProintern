@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import prointern.ProinternApplication.Exception.DetailsNotFoundException;
+import prointern.ProinternApplication.Exception.OperationFailedException;
 import prointern.ProinternApplication.Internship.Model.Task;
 import prointern.ProinternApplication.Internship.Model.Service.TaskService;
 
@@ -36,12 +38,12 @@ public class TaskController {
     }
     
     @PostMapping
-    public Task createTask(@RequestBody Task task) {
+    public String createTask(@RequestBody Task task) {
         return taskService.saveTask(task);
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable("id") Long id, @RequestBody Task taskDetails) {
+    public String updateTask(@PathVariable("id") Long id, @RequestBody Task taskDetails) {
         Optional<Task> task = taskService.getTaskById(id);
         if (task.isPresent()) {
             Task updatedTask = task.get();
@@ -49,9 +51,11 @@ public class TaskController {
             updatedTask.setDescription(taskDetails.getDescription());
             updatedTask.setExpectedLanguage(taskDetails.getExpectedLanguage());
             updatedTask.setTimeLimitMinutes(taskDetails.getTimeLimitMinutes());
-            return ResponseEntity.ok(taskService.saveTask(updatedTask));
+            String result = taskService.saveTask(updatedTask);
+            if(result==null) throw new OperationFailedException("Unable to update");
+            return "Task updated successfully";
         } else {
-            return ResponseEntity.notFound().build();
+            throw new DetailsNotFoundException("Task not found");
         }
     }
     

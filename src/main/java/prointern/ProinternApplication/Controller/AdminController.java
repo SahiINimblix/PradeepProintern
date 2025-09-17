@@ -21,10 +21,7 @@ public class AdminController {
 	AdminService aService;
 	
 	@GetMapping("/allUserDetails")
-	public ResponseEntity<List<User>> getAllEmployees() {
-		List<User> listUsers = aService.listAllUsers();
-		if(!listUsers.isEmpty())
-			return new ResponseEntity<>(listUsers,HttpStatus.OK);
-		return new ResponseEntity<>(listUsers,HttpStatus.NO_CONTENT);
+	public List<User> getAllEmployees() {
+		return aService.listAllUsers();
 	}
 }
