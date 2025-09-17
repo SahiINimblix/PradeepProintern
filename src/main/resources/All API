@@ -103,11 +103,11 @@
 	To submit quiz: http://localhost:8080/api/quiz/submit			[METHOD: POST, Request_Header(authorization), Request_Body(SubmitQuizRequest req)]
 	To get attempt: http://localhost:8080/api/quiz/attempt/{id}		[METHOD: GET, Request_Header(authorization), Path_variable(id)]
 	
-14. QUESTION CONTROLLER:-
+15. QUESTION CONTROLLER:-
 -----------------------
 	To start questions: http://localhost:8080/api/questions/{topic}		[METHOD: GET,Path_variable(topic)]
 	
-14. QUESTION CONTROLLER:-
+16. VIDEO CONTROLLER:-
 -----------------------
 	To start videos: http://localhost:8080/api/videos			[METHOD: GET]
 	To add videos: http://localhost:8080/api/videos				[METHOD: POST, Request_Body(video)]
